@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Glow Petroleum CSR Page – WordPress Setup Guide</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm; }
+  :root { --o:#f26b1d; --y:#ffc23d; --n:#0f1d3a; --ink:#1b2236; --mut:#5b6478; --soft:#fff6ee; --line:#e6e8ef; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--ink); font-size: 10pt; line-height: 1.48; margin: 0; }
+  h1, h2, h3 { line-height: 1.2; color: var(--n); }
+  h2 { font-size: 19pt; margin: 0 0 4mm; padding-bottom: 2mm; border-bottom: 3px solid var(--o); }
+  h3 { font-size: 12pt; margin: 4.5mm 0 1.8mm; }
+  p { margin: 0 0 3mm; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .sec-num { color: var(--o); font-weight: 800; font-size: 9pt; letter-spacing: .15em; text-transform: uppercase; display: block; margin-bottom: 1mm; }
+  code, .mono { font-family: Consolas, "Courier New", monospace; font-size: 9pt; background: #f3f4f7; padding: .5mm 1.2mm; border-radius: 3px; }
+  pre { font-family: Consolas, "Courier New", monospace; font-size: 8.6pt; background: var(--n); color: #e8ecf7; padding: 4mm; border-radius: 6px; white-space: pre-wrap; margin: 2mm 0 4mm; page-break-inside: avoid; }
+  pre .c { color: #8fa0c4; } pre .h { color: var(--y); }
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 9.2pt; } tr { page-break-inside: avoid; }
+  th { background: var(--n); color: #fff; text-align: left; padding: 2mm 3mm; font-weight: 600; }
+  td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:nth-child(even) td { background: #fafbfd; }
+  ol.steps { list-style: none; counter-reset: s; padding: 0; margin: 2mm 0 4mm; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 0 0 3.5mm 11mm; page-break-inside: avoid; }
+  ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: -.3mm; width: 7.5mm; height: 7.5mm; border-radius: 50%; background: linear-gradient(120deg, var(--o), var(--y)); color: #1b1300; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 10pt; }
+  ol.steps > li b.t { display: block; color: var(--n); }
+  .box { border-radius: 6px; padding: 2.5mm 4mm; margin: 2.5mm 0 3mm; page-break-inside: avoid; border-left: 4px solid; }
+  .tip { background: #eefaf2; border-color: #1f9d55; }
+  .warn { background: #fff4e5; border-color: #e8890c; }
+  .stop { background: #fdecee; border-color: #d62839; }
+  .box b:first-child { display: block; margin-bottom: .8mm; }
+  .click { display: inline-block; background: #2271b1; color: #fff; font-weight: 600; font-size: 8.8pt; padding: .3mm 2mm; border-radius: 3px; }
+  .menu { font-weight: 700; color: var(--n); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .shot { width: 100%; border-radius: 6px; border: 1px solid var(--line); display: block; }
+  .cap { font-size: 8.5pt; color: var(--mut); margin: 1mm 0 3mm; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.5mm; margin: 3mm 0 5mm; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 4mm; page-break-inside: avoid; }
+  .card.rec { border: 2px solid var(--o); background: var(--soft); }
+  .card h4 { margin: 0 0 1.5mm; color: var(--n); font-size: 11pt; }
+  .card .tag { font-size: 7.5pt; font-weight: 800; letter-spacing: .1em; color: var(--o); text-transform: uppercase; }
+  .card ul { padding-left: 4mm; margin: 2mm 0 0; font-size: 9pt; }
+  .toc { list-style: none; padding: 0; margin: 4mm 0; }
+  .toc li { display: flex; padding: 2.2mm 0; border-bottom: 1px dashed var(--line); font-size: 11pt; }
+  .toc li span:first-child { color: var(--o); font-weight: 800; width: 10mm; }
+  .check { list-style: none; padding: 0; }
+  .check li { padding: 1.6mm 0 1.6mm 8mm; position: relative; border-bottom: 1px solid var(--line); }
+  .check li::before { content: ""; position: absolute; left: 0; top: 2.2mm; width: 4mm; height: 4mm; border: 1.5px solid var(--n); border-radius: 1px; }
+  .swatch { display: inline-block; width: 4mm; height: 4mm; border-radius: 1mm; vertical-align: -.6mm; margin-right: 1.5mm; border: 1px solid #0002; }
+
+  /* Cover */
+  .cover { height: 257mm; display: flex; flex-direction: column; justify-content: space-between; background: var(--n); color: #fff; margin: -18mm -16mm 0; padding: 26mm 20mm 20mm; position: relative; overflow: hidden; }
+  .cover::before { content: ""; position: absolute; width: 170mm; height: 170mm; border-radius: 50%; right: -60mm; top: -50mm; background: radial-gradient(circle, rgba(242,107,29,.55), transparent 65%); }
+  .cover .eyebrow { color: var(--y); font-weight: 700; letter-spacing: .2em; font-size: 9.5pt; text-transform: uppercase; }
+  .cover h1 { color: #fff; font-size: 34pt; margin: 4mm 0 5mm; position: relative; }
+  .cover h1 span { color: var(--o); }
+  .cover p { color: #c3cbe0; font-size: 12pt; max-width: 135mm; }
+  .cover img { width: 100%; border-radius: 8px; box-shadow: 0 10mm 20mm -8mm #000; position: relative; }
+  .cover .meta { font-size: 9pt; color: #8fa0c4; position: relative; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="page cover">
+  <div>
+    <div class="eyebrow">Glow Petroleum · Website</div>
+    <h1>CSR Page<br><span>WordPress Setup Guide</span></h1>
+    <p>Step-by-step instructions for putting the redesigned Corporate Social Responsibility page on the WordPress site, replacing the photos and text, and keeping it up to date.</p>
+  </div>
+  <img src="../mockups/desktop-1-hero.png" alt="">
+  <div class="meta">Files: github.com/ChiedzaRene/glow-petroleum-csr · Version 1.0 · October 2026</div>
+</section>
+
+<!-- ============ CONTENTS ============ -->
+<section class="page">
+  <h2>Contents</h2>
+  <ul class="toc">
+    <li><span>1</span><span>What you are installing</span></li>
+    <li><span>2</span><span>Which option should I use?</span></li>
+    <li><span>3</span><span>Before you start</span></li>
+    <li><span>4</span><span>Option A – Single-file paste (recommended)</span></li>
+    <li><span>5</span><span>Replacing the placeholder photos</span></li>
+    <li><span>6</span><span>Editing text, links, slides and colours</span></li>
+    <li><span>7</span><span>Option B – WordPress blocks (visual editing)</span></li>
+    <li><span>8</span><span>Option C – Building it in Elementor</span></li>
+    <li><span>9</span><span>Troubleshooting</span></li>
+    <li><span>10</span><span>Checklist before publishing</span></li>
+  </ul>
+
+  <h3>The files</h3>
+  <p>All files are in the GitHub repository <span class="mono">ChiedzaRene/glow-petroleum-csr</span>. On GitHub, click <span class="click">Code</span> → <b>Download ZIP</b> and unzip it on your computer.</p>
+  <table>
+    <tr><th style="width:44%">File</th><th>What it is for</th></tr>
+    <tr><td><code>single-file/glow-csr-wordpress-paste.html</code></td><td><b>Option A.</b> The whole page in one file. Paste it into one WordPress block.</td></tr>
+    <tr><td><code>wordpress-version/option-2-gutenberg-blocks.txt</code></td><td><b>Option B.</b> The page built from normal WordPress blocks.</td></tr>
+    <tr><td><code>wordpress-version/glow-wp-blocks.css</code> / <code>.js</code></td><td>Optional copies of Option B's styles and script, for anyone who wants them in the theme.</td></tr>
+    <tr><td><code>single-file/glow-csr-single-page.html</code></td><td>The same page as a complete web page. Double-click it to preview it in a browser.</td></tr>
+    <tr><td><code>html-version/</code></td><td>A developer version with separate HTML, CSS and JS files.</td></tr>
+    <tr><td><code>mockups/</code></td><td>Screenshots of the finished page on desktop and mobile.</td></tr>
+  </table>
+</section>
+
+<!-- ============ 1. WHAT ============ -->
+<section class="page">
+  <span class="sec-num">Section 1</span>
+  <h2>What you are installing</h2>
+  <p>The new page has five parts, from top to bottom:</p>
+  <table>
+    <tr><th style="width:28%">Part</th><th>What it does</th></tr>
+    <tr><td><b>Header slideshow</b></td><td>Full-width photos fade every 6 seconds with a slow zoom. It has a headline, two buttons, progress dots, arrows and a caption, and visitors can swipe it on a phone.</td></tr>
+    <tr><td><b>Intro and stats</b></td><td>A short commitment statement and four stat boxes.</td></tr>
+    <tr><td><b>Pillar menu</b></td><td>Three buttons that stay at the top while visitors scroll: Sports &amp; Culture, Academic and Community.</td></tr>
+    <tr><td><b>The three pillars</b></td><td><b>Sports &amp; Culture</b> (Golf, Netball and Tug of War cards), <b>Academic</b> (MSAA feature) and <b>Community</b> (photo gallery and impact cards)</td></tr>
+    <tr><td><b>Call to action</b></td><td>An orange "Get in touch" band linking to the Contact page</td></tr>
+  </table>
+  <div class="grid2">
+    <div><img class="shot" src="../mockups/desktop-2-sports.png" alt=""><div class="cap">Sports &amp; Culture section</div></div>
+    <div><img class="shot" src="../mockups/desktop-3-academic.png" alt=""><div class="cap">Academic (MSAA) section</div></div>
+  </div>
+  <img class="shot" src="../mockups/desktop-4-community.png" alt="" style="width:62%;margin:0 auto"><div class="cap" style="text-align:center">Community section</div>
+</section>
+
+<!-- ============ 2. WHICH ============ -->
+<section class="page">
+  <span class="sec-num">Section 2</span>
+  <h2>Which option should I use?</h2>
+  <div class="cards">
+    <div class="card rec">
+      <span class="tag">Recommended</span>
+      <h4>A · Single-file paste</h4>
+      <p style="font-size:9pt">Paste one file into one <b>Custom HTML</b> block.</p>
+      <ul><li>Looks exactly like the mockups</li><li>Takes about 5 minutes</li><li>Works on any theme</li><li>Text and photos are changed in code</li></ul>
+    </div>
+    <div class="card">
+      <span class="tag">Easiest to maintain</span>
+      <h4>B · WordPress blocks</h4>
+      <p style="font-size:9pt">Paste once into the <b>Code editor</b>, then edit everything visually.</p>
+      <ul><li>Click to change text and photos</li><li>Add slides through a Gallery block</li><li>Takes about 15 minutes</li><li>Some themes change the look slightly</li></ul>
+    </div>
+    <div class="card">
+      <span class="tag">If the site uses Elementor</span>
+      <h4>C · Elementor</h4>
+      <p style="font-size:9pt">Rebuild the layout with Elementor widgets, or paste file A into one <b>HTML</b> widget.</p>
+      <ul><li>Drag-and-drop</li><li>Some widgets need Elementor Pro</li><li>Takes 1–2 hours to rebuild</li></ul>
+    </div>
+  </div>
+  <div class="box tip"><b>How to tell which editor the site uses</b>Go to <span class="menu">Pages → All Pages</span> and hover over the CSR page. If you see <b>Edit with Elementor</b>, the site uses Elementor (use Option C, or paste file A into an Elementor HTML widget). Otherwise it uses the standard WordPress Block Editor (use Option A or B).</div>
+  <div class="box warn"><b>Only one option per page</b>Choose one option. Don't paste both into the same page, or the page will show twice.</div>
+</section>
+
+<!-- ============ 3. BEFORE ============ -->
+<section class="page">
+  <span class="sec-num">Section 3</span>
+  <h2>Before you start</h2>
+  <ol class="steps">
+    <li><b class="t">Log in as an Administrator</b>WordPress only lets <b>Administrator</b> accounts save code that contains <code>&lt;script&gt;</code>, which the slideshow needs. To check, go to <span class="menu">Users → Profile</span> and look at <b>Role</b>. On a WordPress Multisite network, only a <b>Super Admin</b> can do this.</li>
+    <li><b class="t">Back up the current page</b>Open the existing CSR page in the editor, then use <span class="menu">⋮ (top right) → Copy all blocks</span> and paste the result into a text file. You can also rely on <b>Revisions</b> in the page sidebar, which lets you restore the old version at any time.</li>
+    <li><b class="t">Prepare the photos</b>
+      <table style="margin-top:2mm">
+        <tr><th>Where</th><th>How many</th><th>Best size</th></tr>
+        <tr><td>Header slideshow</td><td>5 (you can add or remove some)</td><td>1920 × 1080, landscape</td></tr>
+        <tr><td>Golf / Netball / Tug of War cards</td><td>1 each</td><td>1200 × 900</td></tr>
+        <tr><td>MSAA</td><td>2</td><td>1200 × 900</td></tr>
+        <tr><td>Community gallery</td><td>3</td><td>1200 × 900</td></tr>
+      </table>
+      Keep each photo under about <b>400 KB</b> so the page loads fast. You can shrink them for free at <i>squoosh.app</i> or <i>tinypng.com</i>. Pick bright, action-filled photos with people in them.</li>
+    <li><b class="t">Use a full-width page template</b>The design is made to run edge-to-edge. In the page editor, open the <b>Page</b> settings sidebar. Under <b>Template</b> (or in the theme's own panel), choose <b>Full Width</b>, <b>No Sidebar</b> or <b>Blank / Canvas</b>. The exact names depend on the theme.</li>
+    <li><b class="t">Optional: practise on a draft</b>Create a new page with <span class="menu">Pages → Add New</span>, build everything there, and preview it. Once it looks right, copy the content into the real CSR page.</li>
+  </ol>
+</section>
+
+<!-- ============ 4. OPTION A ============ -->
+<section class="page">
+  <span class="sec-num">Section 4</span>
+  <h2>Option A – Single-file paste (recommended)</h2>
+  <p>Use the file <code>single-file/glow-csr-wordpress-paste.html</code>.</p>
+  <ol class="steps">
+    <li><b class="t">Open the file in a plain text editor</b>Right-click the file → <b>Open with</b> → <b>Notepad</b> on Windows or <b>TextEdit</b> on Mac. <i>Don't</i> double-click it, because that opens it in a browser. A free code editor such as <b>VS Code</b> or <b>Notepad++</b> makes finding things easier.</li>
+    <li><b class="t">Copy everything</b>Press <b>Ctrl + A</b>, then <b>Ctrl + C</b> (Mac: <b>⌘ + A</b>, <b>⌘ + C</b>).</li>
+    <li><b class="t">Open the CSR page in WordPress</b>Go to <span class="menu">Pages → All Pages</span>, hover over <b>Our Corporate Social Responsibility</b> and click <b>Edit</b>.</li>
+    <li><b class="t">Remove the old content</b>Click into the content area, press <b>Ctrl + A</b> twice to select every block, then press <b>Delete</b>. (Make sure you did the backup in Section 3 first.)</li>
+    <li><b class="t">Add a Custom HTML block</b>Click the blue <span class="click">+</span> (Block Inserter) at the top left, search for <b>Custom HTML</b> and click it.</li>
+    <li><b class="t">Paste the code</b>Click inside the Custom HTML block and press <b>Ctrl + V</b>. The block fills with code. That's expected: the editor shows code, and the published page shows the design.</li>
+    <li><b class="t">Preview it</b>Click <b>Preview</b> in the block toolbar to check it there, or use <span class="menu">Preview → Preview in new tab</span> at the top right.</li>
+    <li><b class="t">Set the full-width template</b>In the right sidebar, under <b>Page → Template</b>, choose <b>Full Width</b> or <b>No Sidebar</b>.</li>
+    <li><b class="t">Save</b>Click <span class="click">Update</span>, or <span class="click">Publish</span> for a new page. Then open the live page and refresh it.</li>
+  </ol>
+  <div class="box tip"><b>Page title showing twice?</b>The page has its own big header, so you can hide the theme's page title if it appears above it. Many themes have a <b>Disable Title</b> checkbox in the page sidebar.</div>
+  <div class="box stop"><b>Don't press "Convert to blocks"</b>If WordPress offers to convert the Custom HTML into blocks, ignore it. Converting breaks the design.</div>
+</section>
+
+<!-- ============ 5. PHOTOS ============ -->
+<section class="page">
+  <span class="sec-num">Section 5</span>
+  <h2>Replacing the placeholder photos</h2>
+  <p>The page ships with drawn placeholder pictures that are stored inside the file as very long lines of text starting with <code>data:image/svg+xml;base64,</code>. You replace each one with the web address (URL) of a real photo.</p>
+
+  <h3>Step 1 – Upload the photos and copy their URLs</h3>
+  <ol class="steps">
+    <li>Go to <span class="menu">Media → Add New Media File</span> and drag in your photos.</li>
+    <li>Click a photo. In the panel on the right, click <span class="click">Copy URL to clipboard</span>. It will look like <code>https://glowpetroleum.com/wp-content/uploads/2026/10/golf-day.jpg</code>.</li>
+    <li>Fill in the <b>Alternative Text</b> box too (for example, "Glow Petroleum netball team celebrating"). It helps Google and visually impaired visitors.</li>
+  </ol>
+
+  <h3>Step 2 – Swap the URL into the code</h3>
+  <p>Each picture has a label called <code>alt="…"</code> right after its long <code>src="…"</code>. Use <b>Ctrl + F</b> to find the label, then replace the <code>src</code> just before it.</p>
+  <pre><span class="c">BEFORE (shortened – the real line is very long):</span>
+&lt;img src="<span class="h">data:image/svg+xml;base64,PHN2ZyB4bWxucz0i....Pg==</span>" alt="Golf"&gt;
+
+<span class="c">AFTER:</span>
+&lt;img src="<span class="h">https://glowpetroleum.com/wp-content/uploads/2026/10/golf-day.jpg</span>" alt="Golf"&gt;</pre>
+  <div class="box tip"><b>The easiest way to select the long text</b>In VS Code or Notepad++, double-click inside the long text. Most editors select the whole base64 block in one go. You can also click right after <code>src="</code>, then <b>Shift + click</b> just before the closing <code>"</code>.</div>
+
+  <h3>Which label is which picture</h3>
+  <table>
+    <tr><th style="width:42%">Search for</th><th>Where the picture appears</th></tr>
+    <tr><td><code>alt="Glow Petroleum golf day"</code></td><td>Header slide 1 (Golf)</td></tr>
+    <tr><td><code>alt="Glow Petroleum netball team"</code></td><td>Header slide 2 (Netball)</td></tr>
+    <tr><td><code>alt="Tug of war competition"</code></td><td>Header slide 3 (Tug of War)</td></tr>
+    <tr><td><code>alt="MSAA students"</code></td><td>Header slide 4 (MSAA)</td></tr>
+    <tr><td><code>alt="Glow Petroleum community outreach"</code></td><td>Header slide 5 (Community)</td></tr>
+    <tr><td><code>alt="Golf"</code> · <code>alt="Netball"</code> · <code>alt="Tug of war"</code></td><td>The three Sports &amp; Culture cards</td></tr>
+    <tr><td><code>alt="MSAA learners"</code> · <code>alt="MSAA event"</code></td><td>Academic section: large photo · small overlapping photo</td></tr>
+    <tr><td><code>alt="Community outreach"</code> · <code>alt="Donations"</code> · <code>alt="Volunteering"</code></td><td>Community gallery: large photo · top right · bottom right</td></tr>
+  </table>
+  <p>Edit in the text file and paste it into the block again, or edit inside the block, where <b>Ctrl + F</b> also works.</p>
+</section>
+
+<!-- ============ 6. EDITING ============ -->
+<section class="page">
+  <span class="sec-num">Section 6</span>
+  <h2>Editing text, links, slides and colours</h2>
+
+  <h3>Changing text</h3>
+  <p>Find the words with <b>Ctrl + F</b> and type over them. Only change the words <i>between</i> the tags, never the <code>&lt; &gt;</code> parts.</p>
+  <pre>&lt;h3&gt;<span class="h">Netball</span>&lt;/h3&gt;
+&lt;p&gt;<span class="h">The Glow Petroleum netball team competes in the Rainbow Netball League…</span>&lt;/p&gt;</pre>
+  <div class="box warn"><b>Special characters</b>Write <code>&amp;amp;</code> instead of a plain <b>&amp;</b>, for example <code>Sports &amp;amp; Culture</code>. Other characters such as apostrophes and dashes are fine as they are.</div>
+
+  <h3>Changing button links</h3>
+  <p>Links live in <code>href="…"</code>. The "See golf highlights", "Meet the team", "View the action" and "Learn more about MSAA" buttons currently point to <code>#</code>, which goes nowhere. Replace each <code>#</code> with a real page or news-article URL. "Get in touch" points to <code>/index.php/contact-us/</code>. Change it if your contact page has a different address.</p>
+  <pre>&lt;a class="gc-more" href="<span class="h">#</span>"&gt;Meet the team →&lt;/a&gt;
+&lt;a class="gc-more" href="<span class="h">https://glowpetroleum.com/index.php/netball/</span>"&gt;Meet the team →&lt;/a&gt;</pre>
+
+  <h3>Adding or removing a header slide</h3>
+  <p>Each slide is one small block. To <b>add</b> a slide, copy a whole block and paste it below the last one, then change the picture, the caption and the alt text. To <b>remove</b> a slide, delete its whole block. The dots update by themselves.</p>
+  <pre>&lt;div class="gc-slide" data-caption="<span class="h">&lt;b&gt;Community&lt;/b&gt; · Giving back</span>"&gt;
+  &lt;img src="<span class="h">https://…/your-photo.jpg</span>" alt="<span class="h">Describe the photo</span>"&gt;
+&lt;/div&gt;</pre>
+
+  <h3>Changing the colours</h3>
+  <p>All the colours are set in one place near the top of the <code>&lt;style&gt;</code> section. Change a hex code and the whole page follows.</p>
+  <table>
+    <tr><th>Setting</th><th>Current</th><th>Used for</th></tr>
+    <tr><td><code>--glow-orange</code></td><td><span class="swatch" style="background:#f26b1d"></span>#f26b1d</td><td>Main brand colour, buttons, highlights, Community</td></tr>
+    <tr><td><code>--glow-yellow</code></td><td><span class="swatch" style="background:#ffc23d"></span>#ffc23d</td><td>Second gradient colour, slideshow progress bar</td></tr>
+    <tr><td><code>--glow-navy</code></td><td><span class="swatch" style="background:#0f1d3a"></span>#0f1d3a</td><td>Academic background, dark text accents</td></tr>
+    <tr><td><code>--glow-sport</code></td><td><span class="swatch" style="background:#1f9d55"></span>#1f9d55</td><td>Sports &amp; Culture accent</td></tr>
+    <tr><td><code>--glow-academic</code></td><td><span class="swatch" style="background:#2f6fdb"></span>#2f6fdb</td><td>Academic accent</td></tr>
+  </table>
+  <p><b>Slideshow speed:</b> search for <code>DELAY = 6000</code> and change the number (in milliseconds, so 6000 = 6 seconds). Then search for <code>gcBar 6s</code> and change it to match (for example <code>gcBar 8s</code>).</p>
+</section>
+
+<!-- ============ 7. OPTION B ============ -->
+<section class="page">
+  <span class="sec-num">Section 7</span>
+  <h2>Option B – WordPress blocks (visual editing)</h2>
+  <p>Use the file <code>wordpress-version/option-2-gutenberg-blocks.txt</code>. Once it's in, your team can change photos and text by clicking, with no code.</p>
+  <ol class="steps">
+    <li><b class="t">Copy the file</b>Open it in Notepad, press <b>Ctrl + A</b> and then <b>Ctrl + C</b>.</li>
+    <li><b class="t">Switch the page to the Code editor</b>Edit the CSR page, click <b>⋮</b> (Options, top right) → <b>Code editor</b>. The shortcut is <b>Ctrl + Shift + Alt + M</b>.</li>
+    <li><b class="t">Paste</b>Delete anything already in the big text box, then press <b>Ctrl + V</b>.</li>
+    <li><b class="t">Go back to the visual editor</b>Click <b>Exit code editor</b>. You now see real blocks: a gallery, headings, columns, images and buttons.</li>
+    <li><b class="t">Fix any warnings</b>If a block shows <i>"This block contains unexpected or invalid content"</i>, click <span class="click">Attempt recovery</span>. Small differences between WordPress versions cause this, and it's safe.</li>
+    <li><b class="t">Set Full Width, preview and Update</b>Same as Option A, steps 8–9.</li>
+  </ol>
+
+  <h3>Editing each section</h3>
+  <table>
+    <tr><th style="width:26%">To change…</th><th>Do this</th></tr>
+    <tr><td>Slideshow photos</td><td>Click the photos at the top of the page (this is a <b>Gallery</b> block). Use <b>Add</b> in the toolbar to add photos, or click a single photo → <b>Replace</b>. Drag photos to reorder them.</td></tr>
+    <tr><td>Card / MSAA / Community photos</td><td>Click the image → <b>Replace</b> → <b>Open Media Library</b>.</td></tr>
+    <tr><td>Any text</td><td>Click it and type.</td></tr>
+    <tr><td>Button links</td><td>Click the button, then the 🔗 link icon in the toolbar.</td></tr>
+    <tr><td>Community captions</td><td>Click the caption under each community photo.</td></tr>
+  </table>
+
+  <div class="box stop"><b>Keep the "Additional CSS class(es)"</b>The design relies on class names stored in each block under <span class="menu">Block settings → Advanced → Additional CSS class(es)</span>, such as <code>glow-hero</code>, <code>glow-card glow-card--golf</code> and <code>glow-section glow-sport</code>. Don't clear these. When you duplicate a block, the classes come with it.</div>
+  <div class="box warn"><b>Don't delete the first and last blocks</b>The first block (Custom HTML) holds the styles and the last one holds the slideshow script. Without them, the page looks plain and the slideshow doesn't move.</div>
+
+  <h3>Optional: move the styles into the theme</h3>
+  <p>Paste <code>glow-wp-blocks.css</code> into <span class="menu">Appearance → Customize → Additional CSS</span>, and add <code>glow-wp-blocks.js</code> as a <b>Site Wide Footer</b> JavaScript snippet with the free <b>WPCode</b> plugin. Then delete the first and last Custom HTML blocks.</p>
+</section>
+
+<!-- ============ 8. ELEMENTOR ============ -->
+<section class="page">
+  <span class="sec-num">Section 8</span>
+  <h2>Option C – Building it in Elementor</h2>
+  <h3>Quick route: paste file A into Elementor</h3>
+  <ol class="steps">
+    <li>Click <b>Edit with Elementor</b> on the CSR page.</li>
+    <li>Click the <b>⚙ page settings</b> (bottom left) and set <b>Page Layout</b> to <b>Elementor Full Width</b> or <b>Elementor Canvas</b>.</li>
+    <li>Drag an <b>HTML</b> widget onto the page and paste all of <code>glow-csr-wordpress-paste.html</code> into it.</li>
+    <li>Click <span class="click">Update</span>. Photos are swapped in the same way as Section 5.</li>
+  </ol>
+
+  <h3>Full route: rebuild it with Elementor widgets</h3>
+  <p>Set up the brand first in <span class="menu">☰ → Site Settings → Global Colors</span>: Primary <b>#f26b1d</b>, Secondary <b>#ffc23d</b>, Text <b>#1b2236</b>, Accent <b>#0f1d3a</b>. In <b>Global Fonts</b>, use <b>Montserrat 800</b> for headings and <b>Poppins</b> for body text. Then build each section:</p>
+  <table>
+    <tr><th style="width:22%">Section</th><th>Widgets and settings</th></tr>
+    <tr><td><b>Header slideshow</b></td><td><b>Pro:</b> <b>Slides</b> widget with one slide per photo. Turn on <b>Ken Burns Effect</b>, set Autoplay Speed to <b>6000</b>, Height to <b>90vh</b>, and the Background Overlay to navy at 60%.<br><b>Free:</b> a Container whose <b>Background Type</b> is <b>Slideshow</b> (add photos, turn on Ken Burns), with Heading, Text Editor and two Button widgets inside.</td></tr>
+    <tr><td><b>Intro + stats</b></td><td>A Container with a Heading and Text Editor, then a 4-column Container of <b>Counter</b> widgets (3, 3, MSAA as a Heading, 100%), each on a light peach background with rounded corners.</td></tr>
+    <tr><td><b>Pillar menu</b></td><td>A Container holding 3 <b>Button</b> widgets linking to <code>#gc-sport</code>, <code>#gc-academic</code> and <code>#gc-community</code>. <b>Pro:</b> Advanced → Motion Effects → <b>Sticky: Top</b>.</td></tr>
+    <tr><td><b>Sports &amp; Culture</b></td><td>Container with <b>CSS ID</b> <code>gc-sport</code> (Advanced tab). 3 columns, each with an <b>Image Box</b> (free) or <b>Call to Action</b> (Pro). Set the hover animation to <b>Grow</b> and add a coloured top border per sport: green, pink, amber.</td></tr>
+    <tr><td><b>Academic – MSAA</b></td><td>CSS ID <code>gc-academic</code>, background <b>#0f1d3a</b>. 2 columns: an <b>Image</b> on the left; on the right a Heading, Text Editor, <b>Icon List</b> with ✓ icons, and a Button.</td></tr>
+    <tr><td><b>Community</b></td><td>CSS ID <code>gc-community</code>. A <b>Basic Gallery</b> (free) or <b>Gallery</b> (Pro, masonry with lightbox), then 3 <b>Icon Box</b> widgets.</td></tr>
+    <tr><td><b>Get in touch</b></td><td>A Container with a <b>Gradient</b> background (#f26b1d → #ffc23d), border radius 30, plus a Heading and a Button.</td></tr>
+  </table>
+  <p>On every section, set <b>Advanced → Motion Effects → Entrance Animation</b> to <b>Fade In Up</b> for the scroll-in effect. Check phones with the 📱 <b>Responsive Mode</b> icon at the bottom of the panel.</p>
+</section>
+
+<!-- ============ 9. TROUBLESHOOTING ============ -->
+<section class="page">
+  <span class="sec-num">Section 9</span>
+  <h2>Troubleshooting</h2>
+  <table>
+    <tr><th style="width:34%">Problem</th><th>Fix</th></tr>
+    <tr><td>The slideshow doesn't move and the sections stay invisible or plain</td><td>The script was removed when you saved. Log in as an <b>Administrator</b> and paste again (see Section 3). Some security plugins (Wordfence, iThemes) also block scripts in posts. Allow it, or use the WPCode method from Section 7.</td></tr>
+    <tr><td>Changes don't show on the live site</td><td>Clear the cache. Caching plugins such as LiteSpeed, WP Rocket, W3 Total Cache and Autoptimize each have a <b>Purge / Clear cache</b> button in the top admin bar. Then refresh your browser with <b>Ctrl + F5</b>.</td></tr>
+    <tr><td>The page is squashed with a sidebar, or there are white gaps at the sides</td><td>Set the page <b>Template</b> to Full Width or No Sidebar (Section 3, step 4).</td></tr>
+    <tr><td>The page title shows twice</td><td>Tick <b>Disable title</b> in the page sidebar, or hide it in the theme's page options.</td></tr>
+    <tr><td>The pillar menu hides behind the site's top menu when scrolling</td><td>Search the code for <code>position: sticky; top: 0;</code> and change <code>0</code> to the height of your site header, for example <code>top: 80px;</code>.</td></tr>
+    <tr><td>A photo shows as a broken image</td><td>The URL is wrong. Copy it again from <b>Media</b> and make sure it ends in <code>.jpg</code>, <code>.png</code> or <code>.webp</code> and sits inside the quotes.</td></tr>
+    <tr><td>The layout suddenly looks broken after editing</td><td>A tag was probably deleted by accident. Use <b>Revisions</b> in the page sidebar to go back, or paste a fresh copy of the file and redo the changes.</td></tr>
+    <tr><td>"Invalid content" warning (Option B)</td><td>Click <b>Attempt recovery</b>. If that doesn't work, use <b>⋮ → Resolve → Convert to HTML</b> for that one block.</td></tr>
+    <tr><td>The fonts look different</td><td>Some privacy or speed plugins block Google Fonts. The page then uses a similar system font, which is fine. To force the fonts, allow <code>fonts.googleapis.com</code> in the plugin.</td></tr>
+    <tr><td>Arrows or buttons look odd</td><td>The theme's button styles are overriding the page. Use Option A, whose styles are protected inside <code>.glow-csr</code>, or ask a developer to raise the CSS priority.</td></tr>
+  </table>
+</section>
+
+<!-- ============ 10. CHECKLIST ============ -->
+<section class="page">
+  <span class="sec-num">Section 10</span>
+  <h2>Checklist before publishing</h2>
+  <ul class="check">
+    <li>All 13 placeholder pictures are replaced with real photos. Search for <code>data:image</code>: there should be no results.</li>
+    <li>Every photo has a meaningful <code>alt</code> description.</li>
+    <li>The <b>MSAA</b> text has the full name of the programme and accurate details.</li>
+    <li>The Golf (Liberty Gumisa) and Netball (Rainbow Netball League) details are still current.</li>
+    <li>The four stat boxes show correct figures. Consider real numbers such as learners supported or events held.</li>
+    <li>Every <code>href="#"</code> button is changed to a real link or removed.</li>
+    <li>"Get in touch" opens the correct Contact page.</li>
+    <li>The page template is Full Width / No Sidebar.</li>
+    <li>The slideshow fades and the dots and arrows work.</li>
+    <li>The page has been checked on a phone: swipe the slideshow and scroll all sections.</li>
+    <li>The cache has been cleared and the live page checked in a private browser window.</li>
+    <li>The SEO plugin (Yoast / Rank Math) title and description are updated for the page.</li>
+  </ul>
+  <div class="box tip" style="margin-top:5mm"><b>Need changes later?</b>Every version of the code is saved in the GitHub repository <span class="mono">ChiedzaRene/glow-petroleum-csr</span>. If something goes wrong, download the file again and start fresh.</div>
+  <div class="grid2" style="margin-top:6mm;grid-template-columns:1fr 2.2fr;align-items:start">
+    <img class="shot" src="../mockups/mobile-1-hero.png" alt="" style="max-height:95mm;width:auto">
+    <div><h3 style="margin-top:0">How it looks on a phone</h3><p>On phones, the cards stack, the pillar menu scrolls sideways, and visitors can swipe through the slideshow. Check this before publishing, because most visitors arrive on a phone.</p></div>
+  </div>
+</section>
+
+</body>
+</html>

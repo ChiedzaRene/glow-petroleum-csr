@@ -4,6 +4,7 @@
 
 | Folder | What it is |
 |---|---|
+| `docs/Glow-CSR-WordPress-Setup-Guide.pdf` | Detailed step-by-step PDF guide to installing and editing the WordPress version |
 | `mockups/` | Screenshots of the new page on desktop and mobile (hero, Sports & Culture, Academic, Community, full page) |
 | `single-file/glow-csr-wordpress-paste.html` | ⭐ **One file, one paste.** Everything (styles, slideshow script, placeholder images) is inside this one file. Paste it into a single WordPress **Custom HTML** block or an Elementor **HTML** widget. |
 | `single-file/glow-csr-single-page.html` | The same page as one complete web page (open it in a browser, or upload it anywhere). |
