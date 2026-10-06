@@ -5,6 +5,8 @@
 | Folder | What it is |
 |---|---|
 | `mockups/` | Screenshots of the new page on desktop and mobile (hero, Sports & Culture, Academic, Community, full page) |
+| `single-file/glow-csr-wordpress-paste.html` | ⭐ **One file, one paste.** Everything (styles, slideshow script, placeholder images) is inside this one file. Paste it into a single WordPress **Custom HTML** block or an Elementor **HTML** widget. |
+| `single-file/glow-csr-single-page.html` | The same page as one complete web page (open it in a browser, or upload it anywhere). |
 | `html-version/` | Stand-alone **HTML + CSS + JS** (`index.html`, `csr.css`, `csr.js`, `images/`). Open `index.html` in a browser to preview it. |
 | `wordpress-version/option-1-custom-html-block.html` | **WordPress option 1**: the whole page in a single paste |
 | `wordpress-version/option-2-gutenberg-blocks.txt` | **WordPress option 2**: built from normal WordPress blocks (Gallery, Group, Columns, Image, Heading, Buttons), so the text and photos can be edited visually |
@@ -20,6 +22,16 @@ The page ends with a "Get in touch" call-to-action band.
 > ⚠️ The images are **illustrated placeholders**. Replace them with your real event photos. Check all text (especially the MSAA description and the stats) against your facts before publishing.
 
 ---
+
+## Single-file version (no extra files needed)
+
+WordPress won't let you upload separate CSS, JS and image files, so use **`single-file/glow-csr-wordpress-paste.html`**:
+
+1. Edit the CSR page and add **one Custom HTML block** (Elementor: drag in one **HTML** widget).
+2. Open the file in Notepad, select all, copy, and paste it into the block. Then **Update**.
+3. The page works straight away with the placeholder pictures. To use real photos, upload them to **Media**, click **Copy URL**, and replace each long `src="data:image/svg+xml;base64,...."` with `src="PASTE-PHOTO-URL"`. Search the file for `alt="` to find which picture is which.
+
+Only an **Administrator** account can save `<script>` code in WordPress. If you log in as an Editor, the slideshow script may be removed when you save.
 
 ## WordPress option 1: one Custom HTML block (fastest)
 
